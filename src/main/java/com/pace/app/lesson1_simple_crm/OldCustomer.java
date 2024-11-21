@@ -1,9 +1,10 @@
 package com.pace.app.lesson1_simple_crm;
 
-import java.util.UUID;
+import org.springframework.stereotype.Component;
 
-public class Customer {
-private final String id;
+@Component
+public class OldCustomer {
+private String id;
 private String firstName;
 private String lastName;
 private String email;
@@ -12,13 +13,13 @@ private String jobTitle;
 private int yearOfBirth;
 
 // default
-public Customer(){
-  this.id = UUID.randomUUID().toString();
+public OldCustomer(){
+  
 } 
 
-public Customer(String id, String firstName, String lastName, String email, String contactNo, String jobTitle,
+public OldCustomer(String id, String firstName, String lastName, String email, String contactNo, String jobTitle,
     int yearOfBirth) {
-  this.id = UUID.randomUUID().toString();
+  this.id = id;
   this.firstName = firstName;
   this.lastName = lastName;
   this.email = email;
@@ -27,14 +28,12 @@ public Customer(String id, String firstName, String lastName, String email, Stri
   this.yearOfBirth = yearOfBirth;
 }
 
-public Customer(String firstName, String lastName){
-  this.id = UUID.randomUUID().toString();
-  this.firstName = firstName;
-  this.lastName = lastName;
-}
-
 public String getId() {
   return id;
+}
+
+public void setId(String id) {
+  this.id = id;
 }
 
 public String getFirstName() {
