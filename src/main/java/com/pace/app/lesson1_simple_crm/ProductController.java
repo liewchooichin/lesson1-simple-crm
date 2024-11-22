@@ -69,11 +69,13 @@ public class ProductController {
 
   // update
   @PutMapping("/products/{id}")
-  public ResponseEntity<Product> updateProduct(@PathVariable String id, 
+  public ResponseEntity<Product> updateProduct(
+    @PathVariable String id, 
     @RequestBody Product updatedProduct) {
       //process PUT request
       try{
         int index = getProductIndex(id);
+         // set will return previous state of item before changes.
         Product item = products.set(index, updatedProduct);
         Product updatedItem = products.get(index);
         return new ResponseEntity<>(updatedItem, HttpStatus.CREATED);
@@ -93,7 +95,7 @@ public class ProductController {
       if(deletedProduct != null)
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       else
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);  
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);  
     } catch(ProductNotFoundException exception){
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
