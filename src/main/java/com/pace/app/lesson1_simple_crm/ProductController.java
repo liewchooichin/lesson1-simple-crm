@@ -15,15 +15,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 
 @RestController
 public class ProductController {
-
+  // logger
+  private static final Logger logger = LoggerFactory.getLogger(
+    ProductController.class
+  );
+  // productc records
   private ArrayList<Product> products = new ArrayList<>();
 
   public ProductController(){
+    logger.info("Creating items in product list.");
     products.add(new Product("Chickpeas", "Canned chickpeas", 3.25));
     products.add(new Product("Frozen vegetables", "Easy to use frozen veges", 7.75));
     products.add(new Product("Green apples", "Crunchy green apples", 4.50));
