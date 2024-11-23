@@ -30,6 +30,19 @@ public class Product {
     this.price = price;
   }
 
+  // to string
+  @Override
+  public String toString(){
+    StringBuilder sb = new StringBuilder();
+    sb.append(String.format("Product id: %s, ", id));
+    sb.append(String.format("name: %s, ", name));
+    sb.append(String.format("description: %s, ", description));
+    sb.append(String.format("price: %s.%n", price));
+    return sb.toString();
+  }
+
+  // getters and setters
+
   public String getId() {
     return id;
   }

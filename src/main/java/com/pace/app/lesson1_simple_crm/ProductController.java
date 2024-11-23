@@ -39,6 +39,7 @@ public class ProductController {
   @PostMapping("/products")
   public ResponseEntity<Product> createProducts (@RequestBody Product newProduct) {
       //process POST request
+      logger.info("POST: Create item " + newProduct.toString());
       products.add(newProduct);
       return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
   }
@@ -46,6 +47,7 @@ public class ProductController {
   // get all
   @GetMapping("/products")
   public ArrayList<Product> getAllProducts() {
+      logger.info("GET all products.");
       return products;
   }
 
@@ -67,8 +69,10 @@ public class ProductController {
       try{
         int index = getProductIndex(id);
         Product item = (Product) products.get(index);
+        logger.info("GET one item " + item.toString());
         return new ResponseEntity<>(item, HttpStatus.OK);
       } catch(ProductNotFoundException exception){
+        logger.error("GET: Product id not found: " + id);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
   }
@@ -78,15 +82,19 @@ public class ProductController {
   public ResponseEntity<Product> updateProduct(
     @PathVariable String id, 
     @RequestBody Product updatedProduct) {
-      //process PUT request
+      //process PUT reques
       try{
         int index = getProductIndex(id);
+        logger.info("PUT: Update product with id " + id);
          // set will return previous state of item before changes.
-        Product item = products.set(index, updatedProduct);
-        Product updatedItem = products.get(index);
-        return new ResponseEntity<>(updatedItem, HttpStatus.CREATED);
+        Product item = products.get(index);
+        item.setName(updatedProduct.getName());
+        item.setDescription(updatedProduct.getDescription());
+        item.setPrice(updatedProduct.getPrice());
+        products.set(index, item);
+        return new ResponseEntity<>(item, HttpStatus.CREATED);
       } catch (ProductNotFoundException exception){
-          products.add(updatedProduct);
+          logger.error("PUT: Id of product not found: " + id);
           return new ResponseEntity<>(updatedProduct, HttpStatus.CREATED);
       }
   }
@@ -97,12 +105,14 @@ public class ProductController {
     // delete
     try{
       int index = getProductIndex(id);
+      logger.info("DELETE: Product id " + id);
       Product deletedProduct = products.remove(index);
       if(deletedProduct != null)
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       else
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);  
     } catch(ProductNotFoundException exception){
+      logger.error("DELETE: Id of product not found: " + id);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
