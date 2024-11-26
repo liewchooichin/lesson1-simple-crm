@@ -23,6 +23,10 @@ public class CustomerController {
   private CustomerService customerService; 
 
   // constructor
+  // to specify the name of the bean in the @Qualifier annotation 
+  // when we inject the dependency into the CustomerController.
+  // The name of the bean is the name of the class with the first 
+  // letter in lowercase.
   public CustomerController(
     @Qualifier("customerServiceWithLoggingImpl") CustomerService customerService){
     this.customerService = customerService;
